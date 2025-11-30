@@ -93,7 +93,7 @@ main:
 	.p2align 4,,10
 	.p2align 3
 .L12:
-	testb	$1, (%al)
+	testb	$1, %al
 	je	.OPTIMIZE
 .OPTIMIZE:
 	movl	(%rcx), %r12d
