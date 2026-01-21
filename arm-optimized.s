@@ -84,8 +84,14 @@ LBB1_5:                                 ;   in Loop: Header=BB1_6 Depth=2
 	b.eq	LBB1_3
 LBB1_6:                                 ;   Parent Loop BB1_4 Depth=1
                                         ; =>  This Inner Loop Header: Depth=2
-	ldr	w16, [x13]
-	tbnz	w16, #0, LBB1_9
+    // --- added degenerate branch: if (c[i] & 1) {} ---
+    ldr     w16, [x15]
+    tbnz    w16, #0, LBB1_6_deg          // if odd, branch to empty body
+LBB1_6_deg:
+    // --- end added degenerate branch ---
+
+    ldr     w16, [x13]
+    tbnz    w16, #0, LBB1_9
 ; %bb.7:                                ;   in Loop: Header=BB1_6 Depth=2
 	ldr	w16, [x14]
 	tbnz	w16, #0, LBB1_10
