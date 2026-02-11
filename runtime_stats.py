@@ -9,7 +9,7 @@ EXECUTABLES = [
     "./optimized",
 ]
 
-NUM_RUNS = 50
+NUM_RUNS = 30
 CSV_OUTPUT = "runtime_results.csv"
 
 
