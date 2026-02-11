@@ -4,9 +4,8 @@
 	.globl	xorshift32
 	.type	xorshift32, @function
 xorshift32:
-.LFB16:
+.LFB11:
 	.cfi_startproc
-	endbr64
 	movl	(%rdi), %edx
 	movl	%edx, %eax
 	sall	$13, %eax
@@ -20,34 +19,20 @@ xorshift32:
 	movl	%eax, (%rdi)
 	ret
 	.cfi_endproc
-.LFE16:
+.LFE11:
 	.size	xorshift32, .-xorshift32
 	.section	.text.startup,"ax",@progbits
 	.p2align 4
 	.globl	main
 	.type	main, @function
 main:
-.LFB17:
+.LFB12:
 	.cfi_startproc
-	endbr64
-	pushq	%r12
-	.cfi_def_cfa_offset 16
-	.cfi_offset 12, -16
 	xorl	%ecx, %ecx
 	movl	$973, %eax
-	leaq	a(%rip), %rsi
-	pushq	%rbp
-	.cfi_def_cfa_offset 24
-	.cfi_offset 6, -24
-	leaq	b(%rip), %r8
-	leaq	c(%rip), %rdi
-	pushq	%rbx
-	.cfi_def_cfa_offset 32
-	.cfi_offset 3, -32
-	.p2align 4,,10
-	.p2align 3
 .L4:
 	movl	%eax, %edx
+	addq	$4, %rcx
 	sall	$13, %edx
 	xorl	%edx, %eax
 	movl	%eax, %edx
@@ -57,7 +42,7 @@ main:
 	sall	$5, %edx
 	xorl	%edx, %eax
 	movl	%eax, %edx
-	movl	%eax, (%rsi,%rcx)
+	movl	%eax, a-4(%rcx)
 	sall	$13, %edx
 	xorl	%eax, %edx
 	movl	%edx, %eax
@@ -67,7 +52,7 @@ main:
 	sall	$5, %eax
 	xorl	%eax, %edx
 	movl	%edx, %eax
-	movl	%edx, (%r8,%rcx)
+	movl	%edx, b-4(%rcx)
 	sall	$13, %eax
 	xorl	%edx, %eax
 	movl	%eax, %edx
@@ -76,108 +61,88 @@ main:
 	movl	%eax, %edx
 	sall	$5, %edx
 	xorl	%edx, %eax
-	movl	%eax, (%rdi,%rcx)
-	addq	$4, %rcx
+	movl	%eax, c-4(%rcx)
 	cmpq	$40000000, %rcx
 	jne	.L4
-	movl	$1, %ebx
-	leaq	a(%rip), %r8
-	leaq	c(%rip), %r10
-	leaq	b(%rip), %r9
+	movl	$1, %edi
 .L5:
-	leaq	40000000(%rsi), %rdi
-	leaq	b(%rip), %rbp
-	movq	%r8, %rsi
-	leaq	c(%rip), %r11
-	leaq	-40000000(%rdi), %rcx
+	xorl	%eax, %eax
 	.p2align 4,,10
 	.p2align 3
 .L12:
-	movl	(%rcx), %r12d
-	testb	$1, %r12b
+	movl	a(%rax), %esi
+	testb	$1, %sil
 	je	.L6
-	addl	$2, %r12d
-	movl	%r12d, (%rcx)
+	addl	$2, %esi
+	movl	%esi, a(%rax)
 .L6:
-	movl	0(%rbp), %edx
-	testb	$1, %dl
+	movl	b(%rax), %ecx
+	testb	$1, %cl
 	je	.L7
-	addl	$2, %edx
-	movl	%edx, 0(%rbp)
+	addl	$2, %ecx
+	movl	%ecx, b(%rax)
 .L7:
-	movl	(%r11), %eax
-	testb	$1, %al
-	je	.L8
-	addl	$2, %eax
-	movl	%eax, (%r11)
-.L8:
-	testb	$1, %r12b
-	je	.L9
-	addl	$2, %r12d
-	movl	%r12d, (%rcx)
-.L9:
+	movl	c(%rax), %edx
 	testb	$1, %dl
-	je	.L10
+	je	.L8
 	addl	$2, %edx
-	movl	%edx, 0(%rbp)
+	movl	%edx, c(%rax)
+.L8:
+	testb	$1, %sil
+	je	.L9
+	addl	$2, %esi
+	movl	%esi, a(%rax)
+.L9:
+	testb	$1, %cl
+	je	.L10
+	addl	$2, %ecx
+	movl	%ecx, b(%rax)
 .L10:
-	testb	$1, %al
+	testb	$1, %dl
 	je	.L11
-	addl	$2, %eax
-	movl	%eax, (%r11)
+	addl	$2, %edx
+	movl	%edx, c(%rax)
 .L11:
-	addq	$4, %rcx
-	addq	$4, %r11
-	addq	$4, %rbp
-	cmpq	%rdi, %rcx
+	addq	$4, %rax
+	cmpq	$40000000, %rax
 	jne	.L12
-	leal	1(%rbx), %r11d
-	addl	$2, %ebx
-	cmpl	$9, %ebx
+	leal	1(%rdi), %ecx
+	addl	$2, %edi
+	cmpl	$99, %edi
 	jne	.L5
 .L17:
-	movq	%r9, %rcx
-	movq	%r10, %rdx
-	movq	%r8, %rax
+	xorl	%eax, %eax
 	.p2align 4,,10
 	.p2align 3
 .L16:
-	movl	(%rax), %esi
-	testb	$1, %sil
+	movl	a(%rax), %edx
+	testb	$1, %dl
 	je	.L13
-	addl	$2, %esi
-	movl	%esi, (%rax)
+	addl	$2, %edx
+	movl	%edx, a(%rax)
 .L13:
-	movl	(%rcx), %esi
-	testb	$1, %sil
+	movl	b(%rax), %edx
+	testb	$1, %dl
 	je	.L14
-	addl	$2, %esi
-	movl	%esi, (%rcx)
+	addl	$2, %edx
+	movl	%edx, b(%rax)
 .L14:
-	movl	(%rdx), %esi
-	testb	$1, %sil
+	movl	c(%rax), %edx
+	testb	$1, %dl
 	je	.L15
-	addl	$2, %esi
-	movl	%esi, (%rdx)
+	addl	$2, %edx
+	movl	%edx, c(%rax)
 .L15:
 	addq	$4, %rax
-	addq	$4, %rdx
-	addq	$4, %rcx
-	cmpq	%rdi, %rax
+	cmpq	$40000000, %rax
 	jne	.L16
-	addl	$1, %r11d
-	cmpl	$10, %r11d
+	addl	$1, %ecx
+	cmpl	$100, %ecx
 	jne	.L17
-	popq	%rbx
-	.cfi_def_cfa_offset 24
 	xorl	%eax, %eax
-	popq	%rbp
-	.cfi_def_cfa_offset 16
-	popq	%r12
-	.cfi_def_cfa_offset 8
 	ret
 	.cfi_endproc
-.LFE17:
+.LFE12:
 	.size	main, .-main
 	.globl	c
 	.bss
@@ -198,21 +163,5 @@ b:
 	.size	a, 40000000
 a:
 	.zero	40000000
-	.ident	"GCC: (Ubuntu 11.4.0-1ubuntu1~22.04.2) 11.4.0"
+	.ident	"GCC: (GNU) 11.5.0 20240719 (Red Hat 11.5.0-5)"
 	.section	.note.GNU-stack,"",@progbits
-	.section	.note.gnu.property,"a"
-	.align 8
-	.long	1f - 0f
-	.long	4f - 1f
-	.long	5
-0:
-	.string	"GNU"
-1:
-	.align 8
-	.long	0xc0000002
-	.long	3f - 2f
-2:
-	.long	0x3
-3:
-	.align 8
-4:
