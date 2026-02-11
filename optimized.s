@@ -93,6 +93,7 @@ main:
 	.p2align 4,,10
 	.p2align 3
 .L12:
+	movl    (%r11), %eax
 	testb	$1, %al
 	je	.OPTIMIZE
 .OPTIMIZE:
