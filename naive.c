@@ -20,7 +20,7 @@ int main() {
         b[i] = xorshift32(&seed);
         c[i] = xorshift32(&seed);
     }
-    for (int j = 0; 10 > j; j++) {
+    for (int j = 0; 100 > j; j++) {
         for (int i = 0; MAX_SIZE > i; i++) {
             if (a[i] & 1) {
                 a[i] += 2;

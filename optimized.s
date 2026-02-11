@@ -69,7 +69,11 @@ main:
 	xorl	%eax, %eax
 	.p2align 4,,10
 	.p2align 3
-.L12:	
+.L12:
+	movl    c(%rax), %edx
+	testb   $1, %dl
+	je  	.OPTIMIZE0
+.OPTIMIZE0:
 	movl	a(%rax), %esi
 	testb	$1, %sil
 	je	.L6
@@ -117,8 +121,8 @@ main:
 .L16:
 	movl    c(%rax), %edx
 	testb   $1, %dl
-	je  	.OPTIMIZE
-.OPTIMIZE:
+	je  	.OPTIMIZE1
+.OPTIMIZE1:
 	movl	a(%rax), %edx
 	testb	$1, %dl
 	je	.L13
