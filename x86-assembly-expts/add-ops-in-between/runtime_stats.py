@@ -5,8 +5,6 @@ import csv
 
 # --- CONFIGURE YOUR EXECUTABLES HERE ---
 EXECUTABLES = [
-    "./naive",
-    "./optimized",
 ]
 
 start = 0
