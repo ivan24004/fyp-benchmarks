@@ -4,7 +4,7 @@ import subprocess
 from pathlib import Path
 
 CC = "gcc"                      # or "clang"
-CFLAGS = ["-O2", "-no-pie"]     # tweak as needed
+CFLAGS = []     # tweak as needed
 LDFLAGS = []                    # e.g. ["-lm"] if you need math lib
 
 
