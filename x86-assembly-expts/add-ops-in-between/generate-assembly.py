@@ -127,7 +127,7 @@ def main():
         asm_out.write_text("".join(head + injected + tail))
         print(f"Wrote {asm_out} (extra_lines={len(injected)}, repeats={repeats})")
 
-        compile_asm(asm_out, exe_out)
+        # compile_asm(asm_out, exe_out)
         print(f"Built {exe_out}")
         print()
 

@@ -135,12 +135,6 @@ main:
 	addl	$2, %edx
 	movl	%edx, b(%rax)
 .L14:
-	movl	c(%rax), %edx
-	testb	$1, %dl
-	je	.L15
-	addl	$2, %edx
-	movl	%edx, c(%rax)
-.L15:
 ### REPEAT START
    addq    $4, %rax
    subq    $4, %rax
@@ -399,6 +393,12 @@ main:
    addq    $4, %rax
    subq    $4, %rax
 ### REPEAT END
+	movl	c(%rax), %edx
+	testb	$1, %dl
+	je	.L15
+	addl	$2, %edx
+	movl	%edx, c(%rax)
+.L15:
 	addq	$4, %rax
 	cmpq	$40000000, %rax
 	jne	.L16
