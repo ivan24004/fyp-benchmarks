@@ -9,8 +9,7 @@ EXECUTABLES = [
 
 start = 0
 while start <= 8192:
-    EXECUTABLES.append(f"./naive-{start:04d}")
-    EXECUTABLES.append(f"./optimized-{start:04d}")
+    EXECUTABLES.append(f"./lowerbound-{start:04d}")
     if start == 0:
         start = 2
     else:
