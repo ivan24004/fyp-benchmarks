@@ -11,7 +11,7 @@ start = 0
 p = 0.25
 for p in [0.75, 0.875, 0.9375, 0.96875]:
     EXECUTABLES.append(f"./naive_{p}-0000")
-    EXECUTABLES.append(f"./optimized_{p}")
+    EXECUTABLES.append(f"./optimized_{p}-0000")
     if start == 0:
         start = 2
     else:
