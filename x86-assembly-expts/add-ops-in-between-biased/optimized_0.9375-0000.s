@@ -120,7 +120,7 @@ main:
 	.p2align 3
 .L16:
 	movl    c(%rax), %edx
-	testb   $1, %dl
+	testb   $15, %dl
 	je  	.OPTIMIZE1
 .OPTIMIZE1:
 	movl	a(%rax), %edx
